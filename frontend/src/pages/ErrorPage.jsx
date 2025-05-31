@@ -9,7 +9,7 @@ const ErrorPage = () => {
         <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] w-full">
             <div className="text-center">
                 <img
-                    src="/src/assets/images/stacks_dark.png"
+                    src="/stacks_dark.png"
                     alt="logo"
                     className="w-30 h-30 mx-auto mb-8"
                 />

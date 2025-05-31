@@ -33,26 +33,31 @@ mongoose.connect(process.env.MONGODB_URI, {
     });
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://ec2-13-219-93-135.compute-1.amazonaws.com',
+    origin: process.env.CORS_ORIGIN || 'https://stacks-gg.duckdns.org',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
-// Middleware para logging
+// Middleware for logging
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
 });
 
-// Ruta para servir archivos estáticos
+// Root route
+app.get("/api", (req, res) => {
+    res.json({ message: "API REST - Stacks funcionando" });
+});
+
+// Route for static files
 app.use("/api/uploads", express.static(path.join(__dirname, "../uploads")));
 
-// Rutas centralizadas
+// Centralized routes
 registerRoutes(app);
 app.use(errorHandler);
 
-// Conexión a MongoDB
+// Connect to MongoDB
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => console.log('Conectado a MongoDB'))

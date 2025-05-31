@@ -7,6 +7,7 @@ import dns from "dns";
 import { fileURLToPath } from "url";
 import registerRoutes from "./routes/index.js";
 import errorHandler from "./middleware/errorHandler.js";
+import seed from "./data/fakeData.js";
 
 dotenv.config();
 dns.setDefaultResultOrder("ipv4first");
@@ -18,6 +19,18 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(async () => {
+        console.log("MongoDB conectado");
+        await seed();
+        app.listen(3000, () =>
+            console.log("Servidor corriendo en puerto 3000")
+        );
+    });
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN || 'http://ec2-13-219-93-135.compute-1.amazonaws.com',

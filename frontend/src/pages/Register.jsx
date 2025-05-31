@@ -66,7 +66,7 @@ const Register = () => {
                 }
 
                 addToast("¡Bienvenido!", "success");
-                navigate("/login");
+                navigate(`/user/${response.user.id}`);
             } catch (err) {
                 addToast(err.message || "Error en el registro", "error");
             }

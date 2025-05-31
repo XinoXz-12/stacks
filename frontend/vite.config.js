@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: "0.0.0.0",
-    allowedHosts: ['frontend', 'ec2-34-203-202-63.compute-1.amazonaws.com'],
+    allowedHosts: ['frontend', 'ec2-13-219-93-135.compute-1.amazonaws.com'],
   }
 })
 

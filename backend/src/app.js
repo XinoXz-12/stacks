@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://ec2-34-203-202-63.compute-1.amazonaws.com',
+    origin: process.env.CORS_ORIGIN || 'http://ec2-13-219-93-135.compute-1.amazonaws.com',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept']

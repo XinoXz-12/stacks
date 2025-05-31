@@ -13,7 +13,7 @@ export const useFetch = (fetchFunction, dependencies = []) => {
             const result = await fetchFunction();
             setData(result);
         } catch (error) {
-            setError(error.message);
+            setError(error);
         } finally {
             setLoading(false);
         }

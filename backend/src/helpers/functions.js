@@ -131,12 +131,17 @@ export const getPlaceholderImage = (game) => {
 };
 
 export const errorResponse = (res, message, status = 500, error = null) => {
+    if (res.headersSent) {
+        console.error("No se pudo enviar error, headers ya enviados:", message);
+        return;
+    }
+
     return res.status(status).json({
         success: false,
         message,
-        error: error ? error.message || error : undefined,
+        error: error?.message || String(error) || undefined,
     });
-}
+};
 
 export const buildTeamFilters = (query) => {
     const { game, gender } = query;
@@ -147,4 +152,4 @@ export const buildTeamFilters = (query) => {
     if (gender === "F" || gender === "Mixto") filters.gender = gender;
 
     return filters;
-}
+};

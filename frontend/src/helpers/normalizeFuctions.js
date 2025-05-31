@@ -126,9 +126,13 @@ export const cleanBackendMessage = (msg) => {
 
     if (typeof msg !== "string") {
         try {
+            if (msg instanceof Error && msg.message) {
+                return msg.message;
+            }
+
             const parsed =
                 typeof msg.json === "function"
-                    ? msg
+                    ? {}
                     : JSON.parse(msg);
 
             if (parsed.message) {

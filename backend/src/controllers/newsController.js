@@ -13,8 +13,7 @@ const parser = new Parser();
 const translateText = async (text) => {
     if (!text) return null;
     try {
-        // return await translate(text);
-        return text;
+        return await translate(text);
     } catch (error) {
         console.error(
             "#NewsController# #translateText# Error traduciendo texto:",

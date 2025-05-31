@@ -22,12 +22,7 @@ const NewsPage = () => {
                 addToast(msg, "error");
             }
         }
-    }, [error]);
-
-    useEffect(() => {
-        console.log("response:", response);
-        console.log("error:", error);
-    }, [response, error]);    
+    }, [error]);  
 
     // Filtrado local con useMemo
     const filteredNews = useMemo(() => {

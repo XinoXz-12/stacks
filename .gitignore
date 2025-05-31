@@ -46,7 +46,6 @@ dist-ssr
 /backend/.env
 /backend/coverage
 /backend/logs
-/backend/.env
 
 # Frontend específico
 /frontend/dist
@@ -54,7 +53,6 @@ dist-ssr
 /frontend/node_modules
 /frontend/.env
 /frontend/coverage
-/frontend/.env
 
 # Bases de datos
 *.sqlite

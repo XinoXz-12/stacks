@@ -15,7 +15,6 @@ const request = async (
 ) => {
     let url = `${BASE_URL}${endpoint}`;
     if (params) url += `?${new URLSearchParams(params)}`;
-    console.log(BASE_URL);
 
     const response = await fetch(url, {
         method,

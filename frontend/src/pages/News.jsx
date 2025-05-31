@@ -16,9 +16,6 @@ const NewsPage = () => {
     const news = response?.data || [];
 
     useEffect(() => {
-        console.log(error);
-        console.log(response);
-        console.log(news);
         if (error) {
             const msg = cleanBackendMessage(error);
             if (typeof msg === "string") {
@@ -26,6 +23,11 @@ const NewsPage = () => {
             }
         }
     }, [error]);
+
+    useEffect(() => {
+        console.log("response:", response);
+        console.log("error:", error);
+    }, [response, error]);    
 
     // Filtrado local con useMemo
     const filteredNews = useMemo(() => {

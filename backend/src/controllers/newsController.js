@@ -26,6 +26,7 @@ const translateText = async (text) => {
 
 // Obtener noticias de todos los juegos
 const getAllNews = async (_req, res) => {
+    console.log("GET /news");
     try {
         const allNews = [];
 

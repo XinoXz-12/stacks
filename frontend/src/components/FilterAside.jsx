@@ -18,7 +18,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
 
     const { data: ranksData, error: ranksError } = useFetch(getRanksData, []);
 
-    const ranksByGame = ranksData || {};
+    const ranksByGame = ranksData?.data || {};
 
     useEffect(() => {
         if (ranksError) {

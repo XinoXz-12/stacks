@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+        origin: process.env.CORS_ORIGIN || "http://ec2-34-203-202-63.compute-1.amazonaws.com",
         methods: ["GET", "POST"],
         credentials: true,
     },

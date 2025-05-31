@@ -1,0 +1,215 @@
+/* Imports */
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap");
+
+/* Fonts */
+.dosis-400 {
+    font-family: "Dosis", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Animations */
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes neon-flash {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 0.7;
+    }
+    20%,
+    24%,
+    55% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes toast-bar {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+}
+
+@keyframes modal-open {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dropdown-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dropdown-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* General */
+:root {
+    --white: #f2f2f2;
+    --black: black;
+    --bg: #060911;
+    --prim: #267e90;
+    --prim-hover: #18515d;
+    --sec: #131d37;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#root {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    font-family: "Dosis", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: var(--bg);
+    color: var(--white);
+}
+
+.text-hover:hover {
+    text-shadow: 0 0 5px var(--white), 0 0 7px var(--white),
+        0 0 10px var(--white), 0 0 15px var(--prim), 0 0 20px var(--prim),
+        0 0 27px var(--prim), 0 0 35px var(--prim), 0 0 40px var(--prim);
+}
+
+/* HEADER */
+.logo {
+    width: 70px;
+    height: 70px;
+    background: url(/src/assets/images/stacks_dark.png) no-repeat center / cover;
+}
+
+.hover-effect {
+    transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+    box-shadow: 0 0 0.2rem var(--white), 0 0 0.2rem var(--white),
+        0 0 2rem var(--prim), 0 0 0.8rem var(--prim), 0 0 2.8rem var(--prim);
+    transform: scale(1.02);
+}
+
+.text-hovered {
+    text-shadow: 0 0 0.1rem var(--white), 0 0 0.1rem var(--white),
+        0 0 1rem var(--prim), 0 0 0.4rem var(--prim), 0 0 1.4rem var(--prim);
+}
+
+.btn-action {
+    box-shadow: 0 0 0.2rem var(--white), 0 0 0.2rem var(--white),
+        0 0 2rem var(--prim), 0 0 0.8rem var(--prim), 0 0 2.8rem var(--prim);
+    transition: opacity 0.3s ease;
+}
+
+.btn-action:hover::before {
+    animation: neon-flash 1.5s infinite alternate;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.img-user {
+    object-fit: cover;
+    filter: drop-shadow(0 0 15px var(--prim-hover));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--prim);
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--sec);
+}
+
+/* Toast */
+.toast-bar {
+    animation: toast-bar 2s linear;
+}
+
+/* Modal */
+.modal-open {
+    animation: modal-open 0.2s ease-out forwards;
+}
+
+/* Media Queries */
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dropdown-in {
+        animation: dropdown-in 0.3s ease-out forwards;
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .dropdown-out {
+        animation: dropdown-out 0.2s ease-in forwards;
+        pointer-events: none;
+    }
+}

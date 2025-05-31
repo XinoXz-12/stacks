@@ -25,7 +25,7 @@ async function fakeData() {
             _id: eval(makeObjectId(i)),
             username: `User${i}`,
             email: `user${i}@mail.com`,
-            password: "fake_hashed_password",
+            password: "123456",
             age: 18 + i,
             gender: i % 2 === 0 ? "M" : "F",
             image: `/uploads/avatar${i}.png`,

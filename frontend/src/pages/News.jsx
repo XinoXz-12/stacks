@@ -15,14 +15,16 @@ const NewsPage = () => {
 
     const news = response?.data || [];
 
-    // Mensaje de error si falla la carga
     useEffect(() => {
         if (error) {
-            addToast(cleanBackendMessage(error), "error");
+            const msg = cleanBackendMessage(error);
+            if (typeof msg === "string") {
+                addToast(msg, "error");
+            }
         }
-    }, [error, addToast]);
+    }, [error]);
 
-    // Filtrado local con memoización
+    // Filtrado local con useMemo
     const filteredNews = useMemo(() => {
         if (!game) return news;
         return news.filter((item) => item.game === game);

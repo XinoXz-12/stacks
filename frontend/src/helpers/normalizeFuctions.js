@@ -125,11 +125,23 @@ export const cleanBackendMessage = (msg) => {
     if (!msg) return "Error desconocido";
 
     if (typeof msg !== "string") {
-        const parsed = JSON.parse(msg);
-        if (parsed.message) {
-            msg = parsed.message;
+        try {
+            const parsed =
+                typeof msg.json === "function"
+                    ? msg
+                    : JSON.parse(msg);
+
+            if (parsed.message) {
+                msg = parsed.message;
+            } else {
+                return "Error desconocido";
+            }
+        } catch (err) {
+            return "Error del servidor (respuesta no válida)";
         }
     }
+
+    if (typeof msg !== "string") return "Error desconocido";
 
     return msg.replace(/^(#.*?#\s*)+/, "").trim();
 };

@@ -16,6 +16,9 @@ const NewsPage = () => {
     const news = response?.data || [];
 
     useEffect(() => {
+        console.log(error);
+        console.log(response);
+        console.log(news);
         if (error) {
             const msg = cleanBackendMessage(error);
             if (typeof msg === "string") {

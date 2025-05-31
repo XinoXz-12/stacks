@@ -1,13 +1,6 @@
-# Dockerfile
-FROM node:23-alpine
+FROM node:23-alpine AS builder
 
 WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
 COPY . .
 
-EXPOSE 5173
-
-CMD ["npm", "start", "--", "--host", "0.0.0.0"]
+RUN npm install && npm run build

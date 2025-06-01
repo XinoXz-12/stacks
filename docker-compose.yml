@@ -67,6 +67,11 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    healthcheck:
+      test: curl -f http://localhost/.well-known/acme-challenge/ || exit 1
+      interval: 5s
+      retries: 5
+      start_period: 10s
     depends_on:
       - frontend
       - backend
@@ -82,7 +87,8 @@ services:
   certbot-init:
     image: certbot/certbot
     depends_on:
-      - web
+      web:
+        condition: service_healthy
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt

@@ -105,3 +105,4 @@ volumes:
   mongodb_data:
   certbot-etc:
   certbot-var:
+  frontend-build:

@@ -80,6 +80,8 @@ services:
 
   certbot-init:
     image: certbot/certbot
+    depends_on:
+      - web
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt

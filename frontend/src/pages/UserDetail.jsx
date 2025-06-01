@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import useFetch from "../hooks/useFetch";
+import defaultAvatar from "../assets/default-avatar.png";
+
 import {
     comparePassword,
     getImages,
@@ -241,9 +243,7 @@ const UserDetail = () => {
                         )}`}
                         onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = getImages(
-                                "/uploads/jidenticon-default-avatar.png"
-                            );
+                            e.target.src = defaultAvatar;
                         }}
                     />
                 </div>

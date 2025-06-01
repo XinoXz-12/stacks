@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import registerRoutes from "./routes/index.js";
 import errorHandler from "./middleware/errorHandler.js";
 import seed from "./data/fakeData.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 dns.setDefaultResultOrder("ipv4first");
@@ -19,6 +20,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,

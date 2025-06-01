@@ -1,7 +1,10 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import { login as loginService } from "../services/stacks";
-
-const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+import {
+    login as loginService,
+    register as registerService,
+    logout as logoutService,
+    checkAuth,
+} from "../services/stacks";
 
 export const AuthContext = createContext();
 
@@ -14,11 +17,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        const userLoggin = localStorage.getItem("user");
-        return userLoggin ? JSON.parse(userLoggin) : null;
-    });
-    const [token, setToken] = useState(localStorage.getItem("token") || null);
+    const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -26,16 +25,19 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initializeAuth = async () => {
             setLoading(true);
+            try {
+                const response = await checkAuth();
 
-            const lsToken = localStorage.getItem("token");
-            const lsUser = JSON.parse(localStorage.getItem("user"));
-
-            if (lsToken && lsUser) {
-                setToken(lsToken);
-                setUser(lsUser);
+                if (response.success) {
+                    setUser(response.user);
+                } else {
+                    setUser(null);
+                }
+            } catch {
+                setUser(null);
+            } finally {
+                setLoading(false);
             }
-
-            setLoading(false);
         };
 
         initializeAuth();
@@ -45,29 +47,19 @@ export const AuthProvider = ({ children }) => {
     const register = async ({ username, email, password, age, gender }) => {
         try {
             setLoading(true);
-            const response = await fetch(`${VITE_BASE_URL}/auth/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username,
-                    email,
-                    password,
-                    age,
-                    gender,
-                }),
+            const response = await registerService({
+                username,
+                email,
+                password,
+                age,
+                gender,
             });
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                return { success: false, message: data.message };
+            if (!response.success) {
+                return { success: false, message: response.message };
             }
 
-            setToken(data.token);
-            setUser(data.user);
-
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
+            setUser(response.user);
 
             return { success: true, message: "¡Bienvenido!" };
         } catch (err) {
@@ -83,19 +75,15 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true);
 
-            const data = await loginService(formData);
+            const response = await loginService(formData);
 
-            if (!data.token || !data.user) {
+            if (!response.success) {
                 throw new Error("Respuesta inválida del servidor");
             }
 
-            setToken(data.token);
-            setUser(data.user);
+            setUser(response.user);
 
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
-
-            return { success: true, message: data.message };
+            return { success: true, message: response.message };
         } catch (err) {
             setError(err.message);
             return { success: false, message: err.message };
@@ -105,17 +93,16 @@ export const AuthProvider = ({ children }) => {
     };
 
     // Logout user
-    const logout = () => {
-        setToken(null);
-        setUser(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+    const logout = async () => {
+        const response = await logoutService();
+        if (response.success) {
+            setUser(null);
+        }
     };
 
     // Auth context value
     const value = {
         user,
-        token,
         error,
         setError,
         loading,

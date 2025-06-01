@@ -1,9 +1,10 @@
 import React from "react";
 import { useRouteError, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ErrorPage = () => {
     const error = useRouteError();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user } = useAuth();
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] w-full">

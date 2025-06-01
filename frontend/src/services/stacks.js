@@ -4,9 +4,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const getHeaders = (isJson = true) => {
     const headers = {};
     if (isJson) headers["Content-Type"] = "application/json";
-
-    const token = localStorage.getItem("token");
-    if (token) headers["Authorization"] = `Bearer ${token}`;
     return headers;
 };
 
@@ -23,6 +20,7 @@ const request = async (
         headers: getHeaders(isJson),
         body: isJson && body ? JSON.stringify(body) : body,
         mode: "cors",
+        credentials: "include",
     });
 
     if (!response.ok) await handleError(response);
@@ -34,8 +32,6 @@ const handleError = async (response) => {
     const isLoginRequest = response.url.includes("/auth/login");
 
     if (response.status === 401 && !isLoginRequest) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
         window.location.href = "/login";
         throw new Error("Sesión expirada");
     }

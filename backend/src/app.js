@@ -27,9 +27,6 @@ mongoose.connect(process.env.MONGODB_URI, {
     .then(async () => {
         console.log("MongoDB conectado");
         await seed();
-        app.listen(3000, () =>
-            console.log("Servidor corriendo en puerto 3000")
-        );
     });
 
 app.use(cors({

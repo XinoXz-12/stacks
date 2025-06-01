@@ -38,12 +38,13 @@ const handleError = async (response) => {
 
     let message = "Error desconocido";
 
+    let bodyText = await response.text();
+
     try {
-        const data = await response.json();
+        const data = JSON.parse(bodyText);
         message = data.message || message;
     } catch {
-        const text = await response.text();
-        message = text;
+        message = bodyText;
     }
 
     throw new Error(message);

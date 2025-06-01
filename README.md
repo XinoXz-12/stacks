@@ -100,13 +100,7 @@ El entorno incluye `certbot` que:
 
 - Los guarda en volúmenes persistentes (certbot-etc)
 
-- Puedes renovar manualmente con:
-
-```bash
-Copiar código
-docker compose run --rm certbot-init
-docker compose restart web
-```
+> **Nota:** El número máximo de certificados que puede generarme Let's Encrypt es de 5 semanales. Si no puede generarlo usa el autofirmado que no es seguro.
 
 ---
 

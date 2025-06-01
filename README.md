@@ -52,7 +52,6 @@ stacks/
 │   └── data/
 │       └── fakeData.js     # Script de datos para Mongo
 ├── web/                    # Configuración de NGINX
-├── nginx/html              # Carpeta compartida para Certbot
 ├── docker-compose.yml
 └── README.md
 ```

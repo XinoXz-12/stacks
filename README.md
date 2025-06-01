@@ -52,6 +52,7 @@ stacks/
 │   └── data/
 │       └── fakeData.js     # Script de datos para Mongo
 ├── web/                    # Configuración de NGINX
+├── certbot-www/            # Carpeta de configuración para Let's Encrypt
 ├── docker-compose.yml
 └── README.md
 ```
@@ -124,7 +125,12 @@ Puedes iniciar sesión con cualquiera de estos usuarios de prueba:
 [Contraseña]  123456
 ```
 
-Estas cuentas están creadas automáticamente por el sistema cuando se levanta por primera vez.
+Estas cuentas están creadas automáticamente por el sistema cuando se levanta por primera vez. Para acceder a ellas tienes que usar la siguiente cuenta en Mongo Express:
+
+```text
+[Usuario]     admin
+[Contraseña]  123456
+```
 
 ---
 

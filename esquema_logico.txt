@@ -1,0 +1,9 @@
+users(_id, username, email, password, age, gender, image, role)
+
+profiles(_id, user_id fk:users, game, user_game, rank, subrank, style, server)
+
+teams(_id, name, game, gender, capacity, members[] fk:profiles)
+
+requests(_id, profile_id fk:profiles, team_id fk:teams, status, date_joined)
+
+messages(_id, senderId fk:profiles, teamId fk:teams, content, date)

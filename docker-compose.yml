@@ -95,14 +95,14 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - ./certbot-www:/var/www/certbot
     command: >
-      sh -c '
+      sh -c "
         sleep 15
-        if ! grep -q "Let's Encrypt" /etc/letsencrypt/live/stacks-gg.duckdns.org/fullchain.pem 2>/dev/null; then
+        if ! grep -q 'Let'\''s Encrypt' /etc/letsencrypt/live/stacks-gg.duckdns.org/fullchain.pem 2>/dev/null; then
           certbot certonly --webroot --webroot-path=/var/www/certbot --email jaimelozanolozano12@gmail.com --agree-tos --no-eff-email -d stacks-gg.duckdns.org;
         else
           echo 'Certificado ya existente, omitiendo Certbot.';
         fi
-      '
+      "
 
 networks:
   app-network:

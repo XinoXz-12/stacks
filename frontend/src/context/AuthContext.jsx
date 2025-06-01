@@ -26,12 +26,14 @@ export const AuthProvider = ({ children }) => {
         const initializeAuth = async () => {
             setLoading(true);
             try {
-                const response = await checkAuth();
+                if (window.location.pathname !== "/login") {
+                    const response = await checkAuth();
 
-                if (response.success) {
-                    setUser(response.user);
-                } else {
-                    setUser(null);
+                    if (response.success) {
+                        setUser(response.user);
+                    } else {
+                        setUser(null);
+                    }
                 }
             } catch {
                 setUser(null);

@@ -95,7 +95,7 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - ./certbot-www:/var/www/certbot
       - ./web/certbot-init.sh:/certbot-init.sh
-    entrypoint: ["sh", "certbot-init.sh"]
+    entrypoint: ["sh", "/certbot-init.sh"]
 
 networks:
   app-network:

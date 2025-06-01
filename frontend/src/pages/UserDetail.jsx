@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import useFetch from "../hooks/useFetch";
-import defaultAvatar from "../assets/default-avatar.png";
+import defaultAvatar from "../assets/images/jidenticon-default-avatar.png";
 
 import {
     comparePassword,

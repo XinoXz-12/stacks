@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
 async function fakeData() {
     const uri = process.env.MONGODB_URI || 'mongodb://root:example@mongo:27017/stacks?authSource=admin';

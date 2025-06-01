@@ -30,8 +30,9 @@ const request = async (
 // Handle error
 const handleError = async (response) => {
     const isLoginRequest = response.url.includes("/auth/login");
+    const isOnLoginPage = window.location.pathname === "/login";
 
-    if (response.status === 401 && !isLoginRequest) {
+    if (response.status === 401 && !isLoginRequest && !isOnLoginPage) {
         window.location.href = "/login";
         throw new Error("Sesión expirada");
     }

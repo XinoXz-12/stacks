@@ -1,14 +1,12 @@
 version: "3.8"
 
 services:
-  # Frontend (React)
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     image: frontend
 
-  # Backend (Node.js)
   backend:
     build: 
       context: ./backend
@@ -26,7 +24,6 @@ services:
     networks:
       - app-network
 
-  # MongoDB (Database)
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -46,7 +43,6 @@ services:
       retries: 5
       start_period: 40s
 
-  # Mongo Express (Web interface for MongoDB)
   mongo-express:
     image: mongo-express
     container_name: mongo-express
@@ -62,7 +58,6 @@ services:
     networks:
       - app-network
 
-  # Web (Nginx)
   web:
     build:
       context: ./web
@@ -74,14 +69,35 @@ services:
       - frontend
       - backend
       - mongo-express
+      - certbot-init
+    volumes:
+      - ./web:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     networks:
       - app-network
 
-# Networks
+  certbot-init:
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./nginx/html:/usr/share/nginx/html
+    entrypoint: >
+      sh -c "
+        if [ ! -f /etc/letsencrypt/live/stacks-gg.duckdns.org/fullchain.pem ]; then
+          certbot certonly --webroot --webroot-path=/usr/share/nginx/html --email jaimelozanolozano12@gmail.com --agree-tos --no-eff-email -d stacks-gg.duckdns.org;
+        else
+          echo 'Certificado ya existente, omitiendo Certbot.';
+        fi
+      "
+
 networks:
   app-network:
     driver: bridge
 
-# Volumes
 volumes:
   mongodb_data:
+  certbot-etc:
+  certbot-var:

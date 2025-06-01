@@ -6,12 +6,12 @@ Este proyecto está dockerizado y separa sus servicios en distintos contenedores
 - `backend`: API REST (Node.js y Express)
 - `mongo`: Base de datos (MongoDB)
 - `mongo-express`: interfaz web para la base de datos
+- `web`: servidor NGINX (proxy inverso)
+- `certbot`: cliente de Let's Encrypt para certificados SSL válidos
 
 ---
 
 ## Requisitos previos
-
-Para que el proyecto funcione correctamente, necesitas crear un archivo `.env` en la raíz del proyecto con las credenciales de la base de datos.
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
@@ -24,7 +24,6 @@ Para que el proyecto funcione correctamente, necesitas crear un archivo `.env` e
 ### Diagrama Entidad/Relación
 
 ![Vista previa](./frontend/src/assets/images/diagrama_er.png)
-
 
 ### Esquema lógico
 
@@ -41,12 +40,11 @@ messages(_id, senderId fk:profiles, teamId fk:teams, content, date)
 
 ```
 
-
 ---
 
 ## Estructura del proyecto
 
-```
+```text
 stacks/
 │
 ├── frontend/               # Código del cliente
@@ -54,6 +52,7 @@ stacks/
 │   └── data/
 │       └── fakeData.js     # Script de datos para Mongo
 ├── web/                    # Configuración de NGINX
+├── nginx/html              # Carpeta compartida para Certbot
 ├── docker-compose.yml
 └── README.md
 ```
@@ -89,7 +88,26 @@ Esto levanta:
 - `mongo-express`: interfaz para Mongo en [`https://stacks-gg.duckdns.org/mongo/`](https://stacks-gg.duckdns.org/mongo/)
 - `backend`: API (Node.js) en [`https://stacks-gg.duckdns.org/api/`](https://stacks-gg.duckdns.org/api/)
 - `frontend`: App cliente (servido por NGINX)
-- `web`: contenedor NGINX que expone el frontend en [`http://stacks-gg.duckdns.org`](http://stacks-gg.duckdns.org)
+- `web`: contenedor NGINX que expone el frontend en [`https://stacks-gg.duckdns.org`](https://stacks-gg.duckdns.org)
+- Todo el tráfico es redirigido automáticamente a HTTPS usando certificados válidos de Let's Encrypt
+
+---
+
+## Certificados SSL (Let's Encrypt)
+
+El entorno incluye `certbot` que:
+
+- Genera automáticamente certificados válidos al iniciar
+
+- Los guarda en volúmenes persistentes (certbot-etc)
+
+- Puedes renovar manualmente con:
+
+```bash
+Copiar código
+docker compose run --rm certbot-init
+docker compose restart web
+```
 
 ---
 

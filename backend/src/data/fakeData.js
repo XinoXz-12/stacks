@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from 'mongodb';
+import bcrypt from 'bcrypt';
 
 async function fakeData() {
     const uri = process.env.MONGODB_URI || 'mongodb://root:example@mongo:27017/stacks?authSource=admin';
@@ -21,11 +22,11 @@ async function fakeData() {
         console.log("Insertando datos de prueba...");
 
         // USERS
-        const users = Array.from({ length: 10 }).map((_, i) => ({
+        const users = Array.from({ length: 10 }).map(async (_, i) => ({
             _id: makeObjectId(),
             username: `User${i}`,
             email: `user${i}@mail.com`,
-            password: "123456",
+            password: await bcrypt.hash("123456", 8),
             age: 18 + i,
             gender: i % 2 === 0 ? "M" : "F",
             image: `/uploads/avatar${i}.png`,

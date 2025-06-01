@@ -20,12 +20,14 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
 
     const ranksByGame = ranksData?.data || {};
 
+    // Show error
     useEffect(() => {
         if (ranksError) {
             addToast(cleanBackendMessage(ranksError), "error");
         }
     }, [ranksError, addToast]);
 
+    // Handle change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFilters((prev) => ({
@@ -60,6 +62,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                 </button>
             </div>
 
+            {/* Aside */}
             <aside
                 className={`${
                     showFilters ? "block" : "hidden"
@@ -76,10 +79,11 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                     </div>
                 )}
 
+                {/* Form */}
                 <div className="div-form space-y-4">
                     <h4 className="text-xl font-semibold">Búsqueda</h4>
                     <form className="space-y-4 text-sm">
-                        {/* Región */}
+                        {/* Region */}
                         <div className="flex flex-col">
                             <label htmlFor="region" className="mb-1">
                                 Región
@@ -102,7 +106,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                             </select>
                         </div>
 
-                        {/* Edad */}
+                        {/* Age */}
                         <div className="grid grid-cols-2 gap-4">
                             {["minAge", "maxAge"].map((field) => (
                                 <div key={field} className="flex flex-col">
@@ -125,7 +129,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                             ))}
                         </div>
 
-                        {/* Rango */}
+                        {/* Rank */}
                         <div className="grid grid-cols-2 gap-4">
                             {["minRank", "maxRank"].map((field) => (
                                 <div key={field} className="flex flex-col">
@@ -155,7 +159,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                             ))}
                         </div>
 
-                        {/* Jugadores */}
+                        {/* Members in team */}
                         <div className="grid grid-cols-2 gap-4">
                             {["minPlayers", "maxPlayers"].map((field) => (
                                 <div key={field} className="flex flex-col">
@@ -178,7 +182,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                             ))}
                         </div>
 
-                        {/* Estilo */}
+                        {/* Game style */}
                         <fieldset className="space-y-2">
                             <legend className="font-medium">
                                 Estilo de juego
@@ -205,7 +209,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                             </div>
                         </fieldset>
 
-                        {/* Género */}
+                        {/* Gender */}
                         <fieldset className="space-y-2">
                             <legend className="font-medium">Género</legend>
                             <div className="flex space-x-2">
@@ -233,6 +237,7 @@ const FilterAside = ({ filters, setFilters, user, onCreated }) => {
                 </div>
             </aside>
 
+            {/* Modal to create team */}
             {showModal && (
                 <CreateTeamModal
                     user={user}

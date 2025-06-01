@@ -6,12 +6,14 @@ const NewsCard = ({ news }) => {
     const [showModal, setShowModal] = useState(false);
     const [pendingLink, setPendingLink] = useState(null);
 
+    // Handle card click
     const handleCardClick = () => {
         if (!news.link) return;
         setPendingLink(news.link);
         setShowModal(true);
     };
 
+    // Handle confirm navigation
     const handleConfirmNavigation = useCallback(() => {
         if (pendingLink) {
             window.open(pendingLink, "_blank", "noopener,noreferrer");
@@ -22,6 +24,7 @@ const NewsCard = ({ news }) => {
 
     return (
         <>
+            {/* Card */}
             <div
                 onClick={handleCardClick}
                 className="cursor-pointer flex flex-col sm:flex-row overflow-hidden border-2 border-[var(--prim)] rounded-lg bg-[var(--sec)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_var(--prim),0_0_30px_var(--prim)] relative"
@@ -49,6 +52,7 @@ const NewsCard = ({ news }) => {
                 </div>
             </div>
 
+            {/* Modal to confirm navigation */}
             <ConfirmModal
                 show={showModal}
                 onClose={() => setShowModal(false)}

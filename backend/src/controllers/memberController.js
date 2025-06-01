@@ -1,7 +1,7 @@
 import { Team, Profile } from "../models/index.js";
 import { errorResponse } from "../helpers/functions.js";
 
-// Obtener todos los miembros de un equipo
+// Get all members of a team
 const getTeamMembers = async (req, res) => {
     try {
         const { teamId } = req.params;
@@ -29,7 +29,7 @@ const getTeamMembers = async (req, res) => {
     }
 };
 
-// Añadir un miembro a un equipo
+// Add a member to a team
 const addTeamMember = async (req, res) => {
     try {
         const { teamId } = req.params;
@@ -82,7 +82,7 @@ const addTeamMember = async (req, res) => {
     }
 };
 
-// Eliminar un miembro de un equipo
+// Remove a member from a team
 const removeTeamMember = async (req, res) => {
     try {
         const { teamId, profileId } = req.params;
@@ -122,7 +122,7 @@ const removeTeamMember = async (req, res) => {
     }
 };
 
-// Obtener un miembro específico de un equipo
+// Get a specific member of a team
 const getTeamMember = async (req, res) => {
     try {
         const { teamId, profileId } = req.params;

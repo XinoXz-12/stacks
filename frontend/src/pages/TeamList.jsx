@@ -12,7 +12,6 @@ import useFetch from "../hooks/useFetch";
 const TeamList = () => {
     const { user } = useAuth();
     const { addToast } = useToast();
-
     const [filters, setFilters] = useState({
         game: "Valorant",
         gender: "",
@@ -26,7 +25,7 @@ const TeamList = () => {
         maxPlayers: 5,
     });
 
-    // Memo para evitar cambio de referencia en cada render
+    // Memo for stable filters
     const stableFilters = useMemo(
         () => filters,
         [
@@ -43,6 +42,7 @@ const TeamList = () => {
         ]
     );
 
+    // Fetch teams
     const {
         data: teamResponse,
         loading: loadingTeams,
@@ -50,12 +50,14 @@ const TeamList = () => {
         refetch: refetchTeams,
     } = useFetch(() => getAllTeams(stableFilters), [stableFilters]);
 
+    // Fetch ranks
     const {
         data: ranksResponse,
         loading: loadingRanks,
         error: errorRanks,
     } = useFetch(() => getRanksData(), []);
 
+    // Teams
     const teams = useMemo(() => {
         if (!teamResponse?.data) return [];
         return teamResponse.data.filter(
@@ -63,19 +65,23 @@ const TeamList = () => {
         );
     }, [teamResponse]);
 
+    // Ranks
     const ranksData = ranksResponse?.data || [];
 
+    // Error
     useEffect(() => {
         if (errorTeams) addToast(cleanBackendMessage(errorTeams), "error");
         if (errorRanks) addToast(cleanBackendMessage(errorRanks), "error");
     }, [errorTeams, errorRanks, addToast]);
 
+    // Handle team created
     const handleTeamCreated = () => {
         refetchTeams();
     };
 
     return (
         <main className="container mx-auto px-4 w-screen">
+            {/* Carousel */}
             <div className="relative w-screen max-w-none left-1/2 transform -translate-x-1/2 overflow-hidden">
                 <Carousel
                     onGameChange={(selectedGame) =>
@@ -85,6 +91,7 @@ const TeamList = () => {
             </div>
 
             <section className="flex flex-col lg:flex-row gap-12 mt-8">
+                {/* Filter aside */}
                 <FilterAside
                     filters={filters}
                     setFilters={setFilters}
@@ -93,6 +100,7 @@ const TeamList = () => {
                     addToast={addToast}
                 />
 
+                {/* Teams list */}
                 <section className="flex-1 mb-8">
                     {loadingTeams || loadingRanks ? (
                         <LoadingSpinner />
@@ -102,6 +110,7 @@ const TeamList = () => {
                         </p>
                     ) : (
                         <div className="w-full flex flex-col items-center gap-5 sm:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:justify-items-center">
+                            {/* Teams cards */}
                             {teams.map((team) => (
                                 <TeamCard
                                     key={team._id}

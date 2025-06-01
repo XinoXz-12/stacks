@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // Initialize auth
     useEffect(() => {
         const initializeAuth = async () => {
             setLoading(true);
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }) => {
         initializeAuth();
     }, []);
 
+    // Register user
     const register = async ({ username, email, password, age, gender }) => {
         try {
             setLoading(true);
@@ -76,6 +78,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Login user
     const login = async (formData) => {
         try {
             setLoading(true);
@@ -101,6 +104,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Logout user
     const logout = () => {
         setToken(null);
         setUser(null);
@@ -108,6 +112,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
     };
 
+    // Auth context value
     const value = {
         user,
         token,

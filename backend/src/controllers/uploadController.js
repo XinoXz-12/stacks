@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import { errorResponse } from "../helpers/functions.js";
 
-// Configuración de multer
+// Multer configuration
 const storage = multer.diskStorage({
     destination: (_req, _file, cb) => {
         cb(null, path.join(process.cwd(), "uploads"));
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Subir archivo
+// Upload file
 const uploadFile = (req, res) => {
     upload.single("file")(req, res, (error) => {
         if (error) {
@@ -42,7 +42,7 @@ const uploadFile = (req, res) => {
     });
 };
 
-// Eliminar archivo
+// Delete file
 const deleteFile = (req, res) => {
     try {
         const fileName = req.params.fileName;

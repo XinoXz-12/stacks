@@ -4,7 +4,7 @@ async function fakeData() {
     const uri = process.env.MONGODB_URI || 'mongodb://root:example@mongo:27017/stacks?authSource=admin';
     const client = new MongoClient(uri);
 
-    // Utilidad para generar ObjectIds falsos y fechas ISO
+    // Function to generate fake ObjectIds and dates
     const makeObjectId = (i) => `ObjectId("666f${String(i).padStart(6, '0')}")`;
     const makeDate = () => `ISODate("${new Date().toISOString()}")`;
 

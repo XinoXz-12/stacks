@@ -47,7 +47,7 @@ messages(_id, senderId fk:profiles, teamId fk:teams, content, date)
 ## Estructura del proyecto
 
 ```
-project/
+stacks/
 │
 ├── frontend/               # Código del cliente
 ├── backend/                # API REST
@@ -68,13 +68,13 @@ Puedes clonar este repositorio con HTTPS o SSH:
 
 ```bash
 # HTTPS
-git clone https://github.com/XinoXz-12/tfg.git
+git clone https://github.com/XinoXz-12/stacks.git
 
 # SSH
-git clone git@github.com:XinoXz-12/tfg.git
+git clone git@github.com:XinoXz-12/stacks.git
 
 # Entra al proyecto
-cd tfg/
+cd stacks/
 ```
 
 2. Ejecuta Docker Compose:
@@ -99,18 +99,18 @@ El backend incluye un archivo `data/fakeData.js` que se ejecuta automáticamente
 
 Puedes iniciar sesión con cualquiera de estos usuarios de prueba:
 
-```plaintext
-👤 Usuario: User0
-📧 Correo: user0@mail.com
-🔐 Contraseña: 123456
+```text
+[Usuario]     User0
+[Correo]      user0@mail.com
+[Contraseña]  123456
 
-👤 Usuario: User1
-📧 Correo: user1@mail.com
-🔐 Contraseña: 123456
+[Usuario]     User1
+[Correo]      user1@mail.com
+[Contraseña]  123456
 
-👤 Usuario: User2
-📧 Correo: user2@mail.com
-🔐 Contraseña: 123456
+[Usuario]     User2
+[Correo]      user2@mail.com
+[Contraseña]  123456
 ```
 
 Estas cuentas están creadas automáticamente por el sistema cuando se levanta por primera vez.
@@ -157,7 +157,7 @@ JWT_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODNiNDRhMjIxMjY1
 GEM_API_KEY=AIzaSyDYRTOesTE2QRgaJB2B4Rsp63XKcjaOqCg
 ```
 
-> 🔒 **Nota:** Si las traducciones no funcionan probablemente hayan gastado los tokens diarios.
+> **Nota:** Si las traducciones no funcionan probablemente hayan gastado los tokens diarios. Te animo a crearte un token y probarlo tú mismo. [Google AI Studio](https://aistudio.google.com/apikey)
 
 Imagen de cómo se ven con la traducción activa:
 

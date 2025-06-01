@@ -5,18 +5,21 @@ const ToastContext = createContext();
 export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
 
+    // Toast types
     const typeStyles = {
         success: "bg-green-600",
         error: "bg-red-600",
         info: "bg-[var(--prim)]",
     };
 
+    // Toast icons
     const icons = {
         success: "fa-solid fa-check-circle",
         error: "fa-solid fa-xmark-circle",
         info: "fa-solid fa-circle-info",
     };
 
+    // Add toast
     const addToast = (message, type = "info") => {
         const id = Date.now();
         setToasts((prev) => [...prev, { id, message, type }]);
@@ -25,6 +28,7 @@ export const ToastProvider = ({ children }) => {
         }, 2000);
     };
 
+    // Toast provider
     return (
         <ToastContext.Provider value={{ addToast }}>
             {children}
@@ -50,6 +54,7 @@ export const ToastProvider = ({ children }) => {
     );
 };
 
+// Use toast
 export const useToast = () => {
     const context = useContext(ToastContext);
     if (!context) {

@@ -14,8 +14,10 @@ const TeamCard = ({ team, ranksData }) => {
     const member = members[0] || {};
 
     return (
+        
         <Link to={`/team/${_id}`} className="group">
             <article className="bg-[var(--bg)] text-[var(--white)] border-2 border-[var(--prim)] rounded-lg shadow-lg w-fit min-w-[350px] max-w-full p-5 relative overflow-hidden hover-effect hover:bg-[var(--sec)]">
+                {/* Team name and members */}
                 <div className="p-2">
                     <div className="flex justify-between items-center mb-3">
                         <h2 className="text-2xl font-semibold text-white text-hovered">

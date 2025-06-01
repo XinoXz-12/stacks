@@ -13,11 +13,13 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
     const [closing, setClosing] = useState(false);
     const modalRef = useRef(null);
 
+    // Handle change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
+    // Handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -31,12 +33,13 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
         }
     };
 
+    // Close with animation
     const closeWithAnimation = () => {
         setClosing(true);
         setTimeout(() => setShowModal(false), 200);
     };
 
-    // Cierre con Escape
+    // Escape to close
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") closeWithAnimation();
@@ -45,7 +48,7 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, []);
 
-    // Cierre al hacer clic fuera del modal
+    // Click outside to close
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -63,6 +66,7 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
                 closing ? "opacity-0" : "opacity-100"
             }`}
         >
+            {/* Modal */}
             <div
                 ref={modalRef}
                 className={`bg-[var(--sec)] p-6 rounded-lg max-w-md w-4/5 md:w-full text-white shadow-lg relative border-t-2 border-[var(--prim)] transform transition-all duration-200 ${
@@ -81,7 +85,9 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
                     Crear nuevo Stack
                 </h2>
 
+                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Name */}
                     <div>
                         <label htmlFor="name" className="block mb-1">
                             Nombre del Stack
@@ -97,6 +103,7 @@ const CreateTeamModal = ({ user, setShowModal, onCreated }) => {
                         />
                     </div>
 
+                    {/* Game */}
                     <div>
                         <label htmlFor="game" className="block mb-1">
                             Juego

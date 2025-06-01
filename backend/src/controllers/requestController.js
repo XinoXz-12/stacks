@@ -2,7 +2,7 @@ import { Request, Team, Profile } from "../models/index.js";
 import { VALID_STATUS_REQUESTS } from "../helpers/enumsValid.js";
 import { errorResponse } from "../helpers/functions.js";
 
-// Crear nueva solicitud
+// Create new request
 const addRequest = async (req, res) => {
     try {
         const { team_id, profile_id } = req.body;
@@ -61,7 +61,7 @@ const addRequest = async (req, res) => {
     }
 };
 
-// Obtener solicitudes por equipo
+// Get requests by team
 const getRequestsByTeam = async (req, res) => {
     try {
         const { teamId } = req.params;
@@ -95,7 +95,7 @@ const getRequestsByTeam = async (req, res) => {
     }
 };
 
-// Obtener solicitudes por perfil
+// Get requests by profile
 const getRequestsByProfile = async (req, res) => {
     try {
         const { profileId } = req.params;
@@ -128,7 +128,7 @@ const getRequestsByProfile = async (req, res) => {
     }
 };
 
-// Cambiar estado de solicitud
+// Update request status
 const updateRequestStatus = async (req, res) => {
     try {
         const { id } = req.params;
@@ -187,7 +187,7 @@ const updateRequestStatus = async (req, res) => {
     }
 };
 
-// Eliminar solicitud
+// Remove request
 const removeRequest = async (req, res) => {
     try {
         const { id } = req.params;

@@ -19,6 +19,7 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
     const [editProfile, setEditProfile] = useState(profile);
     const [game, setGame] = useState(profile.game);
 
+    // Fetch ranks data
     const {
         data: ranksData,
         loading: loadingRanks,
@@ -26,25 +27,30 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
     } = useFetch(getRanksData, []);
     const ranksAll = ranksData?.data || {};
 
+    // Set edit profile
     useEffect(() => {
         setEditProfile(profile);
         setGame(profile.game);
     }, [profile]);
 
+    // Show error
     useEffect(() => {
         if (ranksError) {
             addToast(cleanBackendMessage(ranksError), "error");
         }
     }, [ranksError, addToast]);
 
+    // Get data game
     const dataGame =
         game && ranksAll ? ranksAll[game] : { ranks: [], subranks: {} };
 
+    // Toggle edit
     const toogleEdit = () => {
         setIsEditing(!isEditing);
         setEditProfile(profile);
     };
 
+    // Handle save
     const handleSave = async () => {
         if (JSON.stringify(editProfile) === JSON.stringify(profile)) {
             addToast("Perfil sin cambios, no se guarda", "info");
@@ -77,6 +83,7 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
         <div className="border-2 border-[var(--prim)] p-4 rounded-lg w-full">
             <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex flex-col gap-2 md:border-r-2 border-[var(--prim)] pr-8 min-w-1/3">
+                    {/* User and game info */}
                     {isEditing ? (
                         <>
                             <input
@@ -143,9 +150,11 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
                     )}
                 </div>
 
+                {/* Rank, style and server info */}
                 <div className="flex flex-col lg:flex-row gap-6 justify-between w-full">
                     <div className="flex flex-row gap-8">
                         <div>
+                            {/* Rank */}
                             <h3 className="text-lg font-bold">Rango</h3>
                             {isEditing ? (
                                 <div>
@@ -215,6 +224,7 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
                         </div>
 
                         <div>
+                            {/* Style */}
                             <h3 className="text-lg font-bold">Estilo</h3>
                             {isEditing ? (
                                 <select
@@ -246,6 +256,7 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
                         </div>
 
                         <div>
+                            {/* Server */}
                             <h3 className="text-lg font-bold">Servidor</h3>
                             {isEditing ? (
                                 <select
@@ -275,6 +286,7 @@ const ProfileCard = ({ profile, onSave, isNew = false, handleDelete }) => {
                         </div>
                     </div>
 
+                    {/* Save and cancel buttons */}
                     {isEditing ? (
                         <div className="flex flex-row gap-4 items-center">
                             <button

@@ -79,7 +79,7 @@
     }
 }
 
-/* General */
+/* General styles */
 :root {
     --white: #f2f2f2;
     --black: black;
@@ -115,6 +115,7 @@ body {
     color: var(--white);
 }
 
+/* Text that turns neon when hovered */
 .text-hover:hover {
     text-shadow: 0 0 5px var(--white), 0 0 7px var(--white),
         0 0 10px var(--white), 0 0 15px var(--prim), 0 0 20px var(--prim),
@@ -122,41 +123,49 @@ body {
 }
 
 /* HEADER */
+/* Logo */
 .logo {
     width: 70px;
     height: 70px;
     background: url(/src/assets/images/stacks_dark.png) no-repeat center / cover;
 }
 
+/* Hover effect */
 .hover-effect {
     transition: all 0.3s ease;
 }
 
+/* Effect neon and scale when hovered */
 .hover-effect:hover {
     box-shadow: 0 0 0.2rem var(--white), 0 0 0.2rem var(--white),
         0 0 2rem var(--prim), 0 0 0.8rem var(--prim), 0 0 2.8rem var(--prim);
     transform: scale(1.02);
 }
 
+/* Text that turns neon always */
 .text-hovered {
     text-shadow: 0 0 0.1rem var(--white), 0 0 0.1rem var(--white),
         0 0 1rem var(--prim), 0 0 0.4rem var(--prim), 0 0 1.4rem var(--prim);
 }
 
+/* Button action */
 .btn-action {
     box-shadow: 0 0 0.2rem var(--white), 0 0 0.2rem var(--white),
         0 0 2rem var(--prim), 0 0 0.8rem var(--prim), 0 0 2.8rem var(--prim);
     transition: opacity 0.3s ease;
 }
 
+/* Effect neon always */
 .btn-action:hover::before {
     animation: neon-flash 1.5s infinite alternate;
 }
 
+/* Cursor pointer */
 .btn:hover {
     cursor: pointer;
 }
 
+/* Image user */
 .img-user {
     object-fit: cover;
     filter: drop-shadow(0 0 15px var(--prim-hover));

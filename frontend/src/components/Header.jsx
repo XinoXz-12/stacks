@@ -11,12 +11,14 @@ const Header = () => {
 
     const navigate = useNavigate();
 
+    // Redirect to login if user is not logged in
     useEffect(() => {
         if (user && !user.id) {
             navigate("/login");
         }
     }, [user, navigate]);
 
+    // Close menu if mobile
     useEffect(() => {
         if (!menuOpen) {
             const timeout = setTimeout(() => setMenuOpen(false), 200);
@@ -24,12 +26,14 @@ const Header = () => {
         }
     }, [menuOpen]);
 
+    // Close menu if mobile
     const closeMenuIfMobile = () => {
         if (window.innerWidth < 768) {
             setMenuOpen(false);
         }
     };
 
+    // Nav links to central nav
     const navLinks = [
         !user && { to: "/", label: "Inicio" },
         { to: "/teams", label: "Stacks" },

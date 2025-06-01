@@ -7,7 +7,7 @@ import {
     buildTeamFilters,
 } from "../helpers/functions.js";
 
-// Crear un nuevo equipo
+// Create a new team
 const createTeam = async (req, res) => {
     try {
         const { name, game, creatorUserId } = req.body;
@@ -74,7 +74,7 @@ const createTeam = async (req, res) => {
     }
 };
 
-// Obtener todos los equipos
+// Get all teams
 const getAllTeams = async (req, res) => {
     try {
         const { region, style, minAge, maxAge, minPlayers, maxPlayers } =
@@ -134,7 +134,7 @@ const getAllTeams = async (req, res) => {
     }
 };
 
-// Obtener un equipo por ID
+// Get a team by ID
 const getTeamById = async (req, res) => {
     try {
         const team = await Team.findById(req.params.id).populate({
@@ -161,7 +161,7 @@ const getTeamById = async (req, res) => {
     }
 };
 
-// Obtener todos los equipos por perfil
+// Get all teams by profile
 const getTeamsByProfile = async (req, res) => {
     try {
         const { profileId } = req.params;
@@ -182,7 +182,7 @@ const getTeamsByProfile = async (req, res) => {
     }
 };
 
-// Actualizar un equipo
+// Update a team
 const updateTeam = async (req, res) => {
     try {
         const { name, game, capacity } = req.body;
@@ -233,7 +233,7 @@ const updateTeam = async (req, res) => {
     }
 };
 
-// Eliminar un equipo
+// Delete a team
 const deleteTeam = async (req, res) => {
     try {
         const team = await Team.findByIdAndDelete(req.params.id);
@@ -262,7 +262,7 @@ const deleteTeam = async (req, res) => {
     }
 };
 
-// Agregar un miembro a un equipo
+// Add a member to a team
 const addMemberToTeam = async (req, res) => {
     try {
         const { teamId } = req.params;

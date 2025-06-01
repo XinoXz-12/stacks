@@ -16,16 +16,16 @@ const ConfirmModal = ({
 
     const { color, icon } = typeStyles[type] || typeStyles.info;
 
-    // Cierre con animación
+    // Close with animation
     const handleClose = () => {
         setClosing(true);
         setTimeout(() => {
             setClosing(false);
             onClose();
-        }, 200); // duración animación
+        }, 200);
     };
 
-    // Escape para cerrar
+    // Escape to close
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") handleClose();
@@ -34,7 +34,7 @@ const ConfirmModal = ({
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, [show]);
 
-    // Clic fuera para cerrar
+    // Click outside to close
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -54,6 +54,7 @@ const ConfirmModal = ({
                 closing ? "opacity-0" : "opacity-100"
             }`}
         >
+            {/* Modal */}
             <div
                 ref={modalRef}
                 className={`bg-[var(--sec)] text-white rounded-lg p-6 w-full max-w-xs md:max-w-sm shadow-xl border-t-2 border-[var(--prim)] transform transition-all duration-200 ${

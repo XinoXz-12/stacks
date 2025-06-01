@@ -8,6 +8,8 @@ import { cleanBackendMessage } from "../helpers/normalizeFuctions.js";
 const ChatSidebar = ({ setSelectedTeam, selectedTeam, refreshKey }) => {
     const { user } = useAuth();
     const { addToast } = useToast();
+
+    // Function to fetch sidebar data
     const fetchSidebarData = async () => {
         const { data: profiles } = await getProfilesByUser(user.id);
         const teamsResponses = await Promise.all(
@@ -34,10 +36,11 @@ const ChatSidebar = ({ setSelectedTeam, selectedTeam, refreshKey }) => {
         return { teams: allTeams, messages: messagesMap };
     };
 
+    // Fetch sidebar data
     const { data, loading, error } = useFetch(fetchSidebarData, [
         user?.id,
         refreshKey,
-    ]); // 👉 dependencia añadida
+    ]);
 
     const teams = data?.teams || [];
     const lastMessages = data?.messages || {};

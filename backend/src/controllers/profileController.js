@@ -1,7 +1,7 @@
 import { Profile, User } from "../models/index.js";
 import { validateProfileData, errorResponse } from "../helpers/functions.js";
 
-// Crear perfil
+// Create profile
 const createProfile = async (req, res) => {
     try {
         const errors = validateProfileData(req.body);
@@ -46,7 +46,7 @@ const createProfile = async (req, res) => {
     }
 };
 
-// Obtener todos los perfiles
+// Get all profiles
 const getAllProfiles = async (_req, res) => {
     try {
         const profiles = await Profile.find().populate(
@@ -68,7 +68,7 @@ const getAllProfiles = async (_req, res) => {
     }
 };
 
-// Obtener perfil por ID
+// Get profile by ID
 const getProfileById = async (req, res) => {
     try {
         const profile = await Profile.findById(req.params.id).populate(
@@ -93,7 +93,7 @@ const getProfileById = async (req, res) => {
     }
 };
 
-// Obtener perfiles por usuario
+// Get profiles by user
 const getProfilesByUser = async (req, res) => {
     try {
         const profiles = await Profile.find({
@@ -114,7 +114,7 @@ const getProfilesByUser = async (req, res) => {
     }
 };
 
-// Actualizar perfil
+// Update profile
 const updateProfile = async (req, res) => {
     try {
         const errors = validateProfileData(req.body);
@@ -151,7 +151,7 @@ const updateProfile = async (req, res) => {
     }
 };
 
-// Eliminar perfil
+// Delete profile
 const deleteProfile = async (req, res) => {
     try {
         const profile = await Profile.findByIdAndDelete(req.params.id);

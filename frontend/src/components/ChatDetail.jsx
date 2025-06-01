@@ -17,7 +17,7 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState("");
 
-    // Obtener mensajes
+    // Get messages
     const {
         data: fetchedMessages,
         loading: loadingMessages,
@@ -27,30 +27,30 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
         [teamId]
     );
 
-    // Obtener equipo
+    // Get team
     const {
         data: team,
         loading: loadingTeam,
         error: errorTeam,
     } = useFetch(() => getTeamById(teamId).then((res) => res.data), [teamId]);
 
-    // Determinar mi perfil dentro del equipo
+    // Determine my profile within the team
     const myProfile = useMemo(() => {
         if (!team || !user?.id) return null;
         return team.members.find((m) => m.user_id._id === user.id);
     }, [team, user?.id]);
 
-    // Aplicar mensajes al useState
+    // Apply messages to useState
     useEffect(() => {
         if (fetchedMessages) setMessages(fetchedMessages);
     }, [fetchedMessages]);
 
-    // Scroll automático al fondo
+    // Automatic scroll to bottom
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    // WebSocket: suscripción a nuevos mensajes
+    // WebSocket: subscription to new messages
     useEffect(() => {
         if (!teamId) return;
 
@@ -70,7 +70,7 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
         };
     }, [teamId]);
 
-    // Envío de mensajes
+    // Send message
     const send = () => {
         if (!myProfile?._id || !teamId || !content.trim()) {
             addToast("Faltan datos para enviar el mensaje", "error");
@@ -91,7 +91,7 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
             });
     };
 
-    // Mostrar errores de fetch
+    // Show fetch errors
     useEffect(() => {
         if (errorMessages)
             addToast(cleanBackendMessage(errorMessages), "error");
@@ -105,7 +105,7 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
                 {loadingTeam ? "Cargando..." : team?.name || "Sin equipo"}
             </div>
 
-            {/* Mensajes */}
+            {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 min-h-0">
                 {loadingMessages ? (
                     <p className="text-center text-gray-400 italic">
@@ -152,7 +152,7 @@ const ChatDetail = ({ teamId, onNewMessage }) => {
                 <div ref={bottomRef} />
             </div>
 
-            {/* Input */}
+            {/* Input to send message */}
             <div className="p-4 border-t flex items-center">
                 <input
                     value={content}

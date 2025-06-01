@@ -1,5 +1,6 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+// Build headers
 const getHeaders = (isJson = true) => {
     const headers = {};
     if (isJson) headers["Content-Type"] = "application/json";
@@ -9,6 +10,7 @@ const getHeaders = (isJson = true) => {
     return headers;
 };
 
+// Request
 const request = async (
     endpoint,
     { method = "GET", params, body, isJson = true } = {}
@@ -27,6 +29,7 @@ const request = async (
     return response.json();
 };
 
+// Handle error
 const handleError = async (response) => {
     const isLoginRequest = response.url.includes("/auth/login");
 
@@ -50,15 +53,22 @@ const handleError = async (response) => {
     throw new Error(message);
 };
 
+// Get
 const get = (endpoint, params) => {
     return request(endpoint, { method: "GET", params });
 };
+
+// Post
 const post = (endpoint, body, isJson = true) => {
     return request(endpoint, { method: "POST", body, isJson });
 };
+
+// Put
 const put = (endpoint, body, isJson = true) => {
     return request(endpoint, { method: "PUT", body, isJson });
 };
+
+// Delete
 const del = (endpoint) => {
     return request(endpoint, { method: "DELETE" });
 };

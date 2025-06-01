@@ -7,6 +7,7 @@ import logo_overwatch from "../assets/images/overwatch.png";
 import banner_valorant from "../assets/images/banner_valorant.png";
 import logo_valorant from "../assets/images/valorant.png";
 
+// Features
 export const features = [
     {
         title: "Juegos no tóxicos",
@@ -28,6 +29,7 @@ export const features = [
     },
 ];
 
+// FAQs
 export const faqs = [
     {
         question: "¿Qué es Stack?",
@@ -47,9 +49,13 @@ export const faqs = [
     },
 ];
 
+// Styles
 export const styles = ["casual", "competitive"];
+
+// Servers
 export const servers = ["NA", "EU", "LATAM", "BR", "AP", "KR"];
 
+// Slides to Carousel
 export const slides = [
     {
         id: 1,
@@ -81,6 +87,7 @@ export const slides = [
     },
 ];
 
+// Game banner map
 export const gameBannerMap = {
     Valorant: banner_valorant,
     LoL: banner_lol,
@@ -88,8 +95,10 @@ export const gameBannerMap = {
     Fortnite: banner_fortnite,
 };
 
+// Genders team
 export const gendersTeam = ["", "F", "Mixto"];
 
+// Type styles
 export const typeStyles = {
     danger: {
         color: "bg-red-600 hover:bg-red-700",
@@ -102,5 +111,22 @@ export const typeStyles = {
     warning: {
         color: "bg-yellow-500 hover:bg-yellow-600 text-black",
         icon: "fa-solid fa-exclamation-triangle",
-    }
+    },
 };
+
+// Form fields
+export const formFields = [
+    { label: "Usuario", name: "username", type: "text" },
+    { label: "Email", name: "email", type: "email" },
+    {
+        label: "Contraseña",
+        name: "password",
+        type: "password",
+    },
+    {
+        label: "Repetir Contraseña",
+        name: "repassword",
+        type: "password",
+    },
+    { label: "Edad", name: "age", type: "number" },
+];

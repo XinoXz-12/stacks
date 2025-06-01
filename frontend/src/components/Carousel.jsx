@@ -4,12 +4,14 @@ import { slides } from "../helpers/constantsData";
 const Carousel = ({ onGameChange }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
+    // Change game
     useEffect(() => {
         if (onGameChange) {
             onGameChange(slides[currentSlide].game);
         }
     }, [currentSlide]);
 
+    // Handle slide change
     const handleSlideChange = (direction) => {
         setCurrentSlide((prev) =>
             direction === "next"
@@ -21,7 +23,7 @@ const Carousel = ({ onGameChange }) => {
     return (
         <div className="w-full overflow-hidden">
             <section className="relative w-full h-[200px]">
-                {/* Slide actual visible */}
+                {/* Current slide visible */}
                 <div
                     className="w-full h-full flex items-center justify-center relative"
                     style={{
@@ -33,7 +35,7 @@ const Carousel = ({ onGameChange }) => {
                         {slides[currentSlide].title}
                     </h2>
 
-                    {/* Botones de navegación visibles siempre */}
+                    {/* Visible navigation buttons */}
                     <div className="hidden md:flex absolute inset-0 justify-between items-center px-4 pointer-events-none">
                         <button
                             onClick={() => handleSlideChange("prev")}
@@ -51,7 +53,7 @@ const Carousel = ({ onGameChange }) => {
                 </div>
             </section>
 
-            {/* Logos inferiores */}
+            {/* Lower buttons logos */}
             <div className="flex justify-center items-center gap-12 py-2 md:-mt-16">
                 {slides.map((slide, index) => (
                     <button

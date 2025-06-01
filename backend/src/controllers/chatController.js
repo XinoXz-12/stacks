@@ -1,7 +1,7 @@
 import { Message } from "../models/index.js";
 import { errorResponse } from "../helpers/functions.js";
 
-// Obtener mensajes de un equipo
+// Get messages of a team
 const getMessagesByTeam = async (req, res) => {
     try {
         const { teamId } = req.params;
@@ -27,7 +27,7 @@ const getMessagesByTeam = async (req, res) => {
     }
 };
 
-// Enviar nuevo mensaje
+// Send new message
 const sendMessage = async (req, res) => {
     try {
         const { teamId } = req.params;
@@ -66,7 +66,7 @@ const sendMessage = async (req, res) => {
     }
 };
 
-// Obtener último mensaje de un equipo
+// Get last message of a team
 const getLastMessageByTeam = async (req, res) => {
     try {
         const { teamId } = req.params;

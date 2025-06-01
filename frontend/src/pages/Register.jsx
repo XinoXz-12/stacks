@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { formFields } from "../helpers/constantsData";
 
 const validateForm = ({
     username,
@@ -27,7 +28,7 @@ const Register = () => {
     const navigate = useNavigate();
     const { register } = useAuth();
     const { addToast } = useToast();
-
+    const [error, setError] = useState("");
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -37,13 +38,13 @@ const Register = () => {
         gender: "",
     });
 
-    const [error, setError] = useState("");
-
+    // Handle change
     const handleChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }, []);
 
+    // Handle submit
     const handleSubmit = useCallback(
         async (e) => {
             e.preventDefault();
@@ -81,21 +82,8 @@ const Register = () => {
             </h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="flex flex-col md:grid md:grid-cols-2 gap-6">
-                    {[
-                        { label: "Usuario", name: "username", type: "text" },
-                        { label: "Email", name: "email", type: "email" },
-                        {
-                            label: "Contraseña",
-                            name: "password",
-                            type: "password",
-                        },
-                        {
-                            label: "Repetir Contraseña",
-                            name: "repassword",
-                            type: "password",
-                        },
-                        { label: "Edad", name: "age", type: "number" },
-                    ].map(({ label, name, type }) => (
+                    {/* Form fields from formFields in helpers/constantsData.js */}
+                    {formFields.map(({ label, name, type }) => (
                         <div key={name}>
                             <label className="block text-sm font-medium text-[var(--white)]">
                                 {label}
@@ -111,6 +99,7 @@ const Register = () => {
                         </div>
                     ))}
 
+                    {/* Gender */}
                     <div>
                         <label className="block text-sm font-medium text-[var(--white)]">
                             Género
@@ -130,8 +119,10 @@ const Register = () => {
                     </div>
                 </div>
 
+                {/* Error message above button */}
                 {error && <p className="text-red-500 text-center">{error}</p>}
 
+                {/* Button */}
                 <div className="flex flex-col items-center gap-4">
                     <button
                         type="submit"

@@ -4,6 +4,7 @@ import { faqs } from "../helpers/constantsData";
 const Faq = () => {
     const [activeIndex, setActiveIndex] = useState(null);
 
+    // Toggle FAQ
     const toggleFaq = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
@@ -14,6 +15,7 @@ const Faq = () => {
                 Preguntas Frecuentes
             </h1>
             <div className="flex flex-col gap-4">
+                {/* FAQ's cards from object faqs in helpers/constantsData.js */}
                 {faqs.map((faq, index) => (
                     <div
                         key={index}

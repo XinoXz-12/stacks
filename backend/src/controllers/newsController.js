@@ -23,7 +23,7 @@ const translateText = async (text) => {
     }
 };
 
-// Obtener noticias de todos los juegos
+// Get all news of all games
 const getAllNews = async (_req, res) => {
     console.log("GET /news");
     try {

@@ -6,6 +6,7 @@ const Chat = () => {
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [refreshKey, setRefreshKey] = useState(0);
 
+    // Trigger refresh
     const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
     return (

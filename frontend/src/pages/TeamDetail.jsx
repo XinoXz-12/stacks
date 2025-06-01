@@ -47,26 +47,33 @@ const TeamDetail = () => {
         type: "warning",
     });
 
+    // Fetch team
     const { data: teamRes, loading: loadingTeam } = useFetch(
         () => getTeamById(id),
         [id]
     );
 
+    // Fetch members
     const {
         data: membersRes,
         loading: loadingMembers,
         refetch: refetchMembers,
     } = useFetch(() => getTeamMembers(id), [id]);
 
+    // Fetch ranks
     const { data: ranksRes, loading: loadingRanks } = useFetch(
         () => getRanksData(),
         []
     );
 
+    // Team
     const team = teamRes?.data || null;
+    // Members
     const members = membersRes || [];
+    // Ranks
     const ranksData = ranksRes?.data || [];
 
+    // Creator profile
     const creator = useMemo(() => members?.[0] || null, [members]);
     const isMember = useMemo(
         () => members.some((m) => m.user_id?._id === user?.id),
@@ -78,9 +85,10 @@ const TeamDetail = () => {
     const canRequest =
         user && !isMember && !isFull && userProfile && !requestPending;
 
+    // Banner image
     const bannerImage = gameBannerMap[team?.game] || gameBannerMap["Valorant"];
 
-    // Obtener perfiles de usuario y solicitudes
+    // Fetch profile data
     useEffect(() => {
         const fetchProfileData = async () => {
             if (!user?.id || !team) return;
@@ -111,7 +119,7 @@ const TeamDetail = () => {
         fetchProfileData();
     }, [user, team, addToast]);
 
-    // Obtener solicitudes del creador
+    // Fetch team requests
     useEffect(() => {
         const fetchTeamRequests = async () => {
             if (isCreator && team?._id) {
@@ -128,6 +136,7 @@ const TeamDetail = () => {
         fetchTeamRequests();
     }, [isCreator, team, addToast]);
 
+    // Show confirmation
     const showConfirmation = ({
         action,
         title,
@@ -146,11 +155,13 @@ const TeamDetail = () => {
         });
     };
 
+    // Handle confirm
     const handleConfirm = async () => {
         if (confirmData.action) await confirmData.action();
         setConfirmData((prev) => ({ ...prev, show: false }));
     };
 
+    // Handle join request
     const handleJoinRequest = async () => {
         try {
             await addRequest({ team_id: id, profile_id: userProfile._id });
@@ -161,6 +172,7 @@ const TeamDetail = () => {
         }
     };
 
+    // Handle request action
     const handleRequestAction = async (reqId, action) => {
         try {
             await updateRequestStatus(reqId, { status: action });
@@ -174,6 +186,7 @@ const TeamDetail = () => {
         }
     };
 
+    // Handle cancel request
     const handleCancelRequest = async () => {
         try {
             const { data: userRequests } = await getRequestsByProfile(
@@ -192,6 +205,7 @@ const TeamDetail = () => {
         }
     };
 
+    // Handle leave team
     const handleLeaveTeam = async () => {
         try {
             await removeTeamMember(team._id, userProfile._id);
@@ -202,6 +216,7 @@ const TeamDetail = () => {
         }
     };
 
+    // Handle kick member
     const handleKickMember = async (profileId) => {
         try {
             await removeTeamMember(team._id, profileId);
@@ -212,6 +227,7 @@ const TeamDetail = () => {
         }
     };
 
+    // Handle delete team
     const handleDeleteTeam = async () => {
         try {
             await deleteTeam(team._id);
@@ -222,8 +238,11 @@ const TeamDetail = () => {
         }
     };
 
+    // Loading
     if (loadingTeam || loadingMembers || loadingRanks)
         return <LoadingSpinner />;
+
+    // Team not found
     if (!team) {
         addToast("Stack no encontrada", "error");
         navigate("/teams");
@@ -232,6 +251,7 @@ const TeamDetail = () => {
 
     return (
         <article className="container mx-auto px-4">
+            {/* Banner */}
             <header
                 className="relative h-[200px] w-full rounded-b-lg overflow-hidden mb-6 shadow"
                 style={{
@@ -250,6 +270,7 @@ const TeamDetail = () => {
                 </div>
             </header>
 
+            {/* Team info */}
             <section className="grid gap-8 sm:grid-cols-1 lg:grid-cols-3 mb-6">
                 <aside className="bg-[var(--sec)] py-6 px-12 rounded-lg shadow space-y-2 text-white">
                     <p>
@@ -288,6 +309,7 @@ const TeamDetail = () => {
                         )}
                     </p>
 
+                    {/* Join request */}
                     {canRequest && (
                         <button
                             onClick={handleJoinRequest}
@@ -301,6 +323,8 @@ const TeamDetail = () => {
                             Solicitar unión
                         </button>
                     )}
+
+                    {/* Request pending */}
                     {requestPending && (
                         <div className="mt-4">
                             <button
@@ -323,6 +347,8 @@ const TeamDetail = () => {
                             </p>
                         </div>
                     )}
+
+                    {/* Leave team */}
                     {isMember && !isCreator && (
                         <button
                             onClick={() =>
@@ -340,6 +366,8 @@ const TeamDetail = () => {
                             Abandonar Stack
                         </button>
                     )}
+
+                    {/* Delete team */}
                     {isCreator && members.length <= 1 && (
                         <button
                             onClick={() =>
@@ -365,6 +393,7 @@ const TeamDetail = () => {
                         Miembros
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* Members cards */}
                         {members.map((member) => (
                             <div
                                 key={member._id}
@@ -393,6 +422,7 @@ const TeamDetail = () => {
                                     Estilo: {normalizeStyle(member.style)}
                                 </span>
 
+                                {/* Kick member */}
                                 {isCreator &&
                                     user?.id !== member.user_id?._id && (
                                         <button
@@ -427,6 +457,7 @@ const TeamDetail = () => {
                     <h2 className="text-xl font-bold">
                         Solicitudes pendientes
                     </h2>
+                    {/* Requests cards */}
                     {requests.map((req) => {
                         const profile = req.profile_id;
 
@@ -435,6 +466,7 @@ const TeamDetail = () => {
                                 key={req._id}
                                 className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-black/20 p-4 rounded-md"
                             >
+                                {/* Profile info */}
                                 <div className="text-white space-y-1">
                                     <p className="font-bold text-lg">
                                         {profile?.user_game ||
@@ -475,6 +507,8 @@ const TeamDetail = () => {
                                         </p>
                                     </div>
                                 </div>
+
+                                {/* Accept and reject buttons */}
                                 <div className="flex gap-2 mt-4 sm:mt-0 sm:ml-4">
                                     <button
                                         className="bg-[var(--prim)] text-white px-4 py-2 rounded-lg hover:bg-[var(--prim-hover)] transition-all duration-300 transform hover:scale-105 flex items-center gap-2 font-medium shadow-md hover:shadow-lg btn"
@@ -520,6 +554,8 @@ const TeamDetail = () => {
                     })}
                 </section>
             )}
+
+            {/* Confirm modal */}
             <ConfirmModal
                 show={confirmData.show}
                 onClose={() =>

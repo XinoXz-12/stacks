@@ -22,18 +22,22 @@ import ProfileCard from "../components/ProfileCard";
 import ConfirmModal from "../components/ConfirmModal";
 
 const UserDetail = () => {
-    const { id: urlId } = useParams();
-    const navigate = useNavigate();
-    const { user, setUser, logout } = useAuth();
     const { addToast } = useToast();
+    const navigate = useNavigate();
+
+    // User
+    const { id: urlId } = useParams();
+    const { user, setUser, logout } = useAuth();
     const userId = urlId || user?.id;
 
+    // Fetch user data
     const {
         data: userData,
         loading: loadingUser,
         error: errorUser,
     } = useFetch(() => getUserById(userId), [userId]);
 
+    // Fetch profiles data
     const {
         data: profileData,
         loading: loadingProfiles,
@@ -41,6 +45,7 @@ const UserDetail = () => {
         refetch: reloadProfiles,
     } = useFetch(() => getProfilesByUser(userId), [userId]);
 
+    // Form data
     const [formData, setFormData] = useState({
         username: "",
         age: "",
@@ -49,6 +54,7 @@ const UserDetail = () => {
         newPassword: "",
     });
 
+    // Profiles
     const [profiles, setProfiles] = useState([]);
     const [creatingProfile, setCreatingProfile] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -56,6 +62,7 @@ const UserDetail = () => {
     const [profileToDelete, setProfileToDelete] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    // Update form data
     useEffect(() => {
         if (userData?.data) {
             setFormData((prev) => ({
@@ -69,12 +76,14 @@ const UserDetail = () => {
         }
     }, [userData]);
 
+    // Update profiles
     useEffect(() => {
         if (profileData?.data) {
             setProfiles(profileData.data);
         }
     }, [profileData]);
 
+    // Handle change form data
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -83,6 +92,7 @@ const UserDetail = () => {
         }));
     };
 
+    // Handle image upload
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -106,6 +116,7 @@ const UserDetail = () => {
         }
     };
 
+    // Handle save
     const handleSave = async () => {
         setIsLoading(true);
         try {
@@ -157,6 +168,7 @@ const UserDetail = () => {
         }
     };
 
+    // Handle create profile
     const handleCreateProfileClick = () => {
         setCreatingProfile({
             user_game: "",
@@ -172,6 +184,7 @@ const UserDetail = () => {
         });
     };
 
+    // Handle save new profile
     const handleSaveNewProfile = async (newProfileData) => {
         try {
             await createProfile(newProfileData);
@@ -183,11 +196,13 @@ const UserDetail = () => {
         }
     };
 
+    // Handle delete profile
     const requestDeleteProfile = (profileId) => {
         setProfileToDelete(profileId);
         setShowDeleteConfirm(true);
     };
 
+    // Handle confirm delete profile
     const confirmDeleteProfile = async () => {
         try {
             if (creatingProfile?._id === profileToDelete) {
@@ -206,6 +221,7 @@ const UserDetail = () => {
         }
     };
 
+    // Handle logout
     const handleLogout = () => {
         logout();
         addToast("¡Hasta luego!");
@@ -214,7 +230,7 @@ const UserDetail = () => {
 
     return (
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-            {/* Información del usuario */}
+            {/* User info */}
             <div className="flex flex-col items-center gap-6 text-[var(--white)] p-6 rounded-lg w-full max-w-md mx-auto bg-[var(--sec)] m-4">
                 <div className="relative">
                     <img
@@ -232,6 +248,7 @@ const UserDetail = () => {
                     />
                 </div>
 
+                {/* Image upload */}
                 <div className="flex flex-col items-center gap-2">
                     <input
                         type="file"
@@ -253,6 +270,7 @@ const UserDetail = () => {
                     </label>
                 </div>
 
+                {/* Form */}
                 <div className="w-full flex flex-col gap-4">
                     <label>
                         <span className="block mb-1">Username</span>
@@ -321,6 +339,7 @@ const UserDetail = () => {
                         />
                     </label>
 
+                    {/* Save button */}
                     <button
                         onClick={handleSave}
                         disabled={isLoading}
@@ -333,6 +352,7 @@ const UserDetail = () => {
                         {isLoading ? "Guardando..." : "Guardar cambios"}
                     </button>
 
+                    {/* Logout button */}
                     <button
                         onClick={() => setShowLogoutConfirm(true)}
                         className="border-2 border-red-500 text-red-500 px-6 py-2 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center gap-2 font-medium justify-center btn"
@@ -342,10 +362,11 @@ const UserDetail = () => {
                 </div>
             </div>
 
-            {/* Perfiles */}
+            {/* Profiles */}
             <div className="flex flex-col items-center gap-6 text-[var(--white)] p-6 rounded-lg w-full md:col-span-2 mx-auto bg-[var(--sec)] m-4">
                 <h1 className="text-3xl font-bold">Mis Perfiles</h1>
                 <div className="flex flex-col items-center gap-4 w-full">
+                    {/* Profiles cards */}
                     {profiles.length > 0 ? (
                         profiles.map((profile) => (
                             <ProfileCard
@@ -362,6 +383,8 @@ const UserDetail = () => {
                             No se encontraron perfiles.
                         </p>
                     )}
+
+                    {/* New profile card */}
                     {creatingProfile && (
                         <ProfileCard
                             key={creatingProfile._id}
@@ -375,6 +398,7 @@ const UserDetail = () => {
                     )}
                 </div>
 
+                {/* Create profile button */}
                 <button
                     onClick={handleCreateProfileClick}
                     className="btn bg-[var(--prim)] hover:bg-[var(--prim-hover)] text-white px-4 py-2 rounded-md"
@@ -383,7 +407,7 @@ const UserDetail = () => {
                 </button>
             </div>
 
-            {/* Confirmaciones */}
+            {/* Confirmations modals */}
             <ConfirmModal
                 show={showDeleteConfirm}
                 onClose={() => setShowDeleteConfirm(false)}

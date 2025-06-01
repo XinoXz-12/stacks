@@ -22,6 +22,7 @@ const MyTeams = () => {
     const [teams, setTeams] = useState([]);
     const [filteredTeams, setFilteredTeams] = useState([]);
 
+    // Fetch profiles
     const {
         data: profilesData,
         loading: loadingProfiles,
@@ -29,6 +30,7 @@ const MyTeams = () => {
     } = useFetch(() => getProfilesByUser(user.id), [user]);
     const profiles = profilesData?.data || [];
 
+    // Fetch ranks
     const {
         data: ranksData,
         loading: loadingRanks,
@@ -36,7 +38,7 @@ const MyTeams = () => {
     } = useFetch(() => getRanksData(), []);
     const ranks = ranksData?.data || [];
 
-    // Obtener los equipos por cada perfil
+    // Fetch teams by profile
     useEffect(() => {
         const fetchTeams = async () => {
             if (!profiles || !Array.isArray(profiles)) return;
@@ -62,7 +64,7 @@ const MyTeams = () => {
         fetchTeams();
     }, [profiles, addToast]);
 
-    // Filtrar los equipos según juego actual
+    // Filter teams by current game
     useEffect(() => {
         const filtered = teams.filter((team) => team.game === game);
         setFilteredTeams(filtered);
@@ -72,10 +74,12 @@ const MyTeams = () => {
 
     return (
         <>
+            {/* Loading */}
             {loading ? (
                 <LoadingSpinner />
             ) : (
                 <main className="container mx-auto px-4 w-screen">
+                    {/* Carousel */}
                     <div className="relative w-screen max-w-none left-1/2 transform -translate-x-1/2 overflow-hidden">
                         <Carousel
                             onGameChange={(selectedGame) =>
@@ -85,6 +89,7 @@ const MyTeams = () => {
                     </div>
 
                     <section className="flex flex-col lg:flex-row gap-12 mt-8">
+                        {/* Teams */}
                         <section className="flex-1 mb-8">
                             <h2 className="text-3xl font-bold text-white mb-4">
                                 Mis Stacks en {normalizeGame(game)}

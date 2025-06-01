@@ -15,6 +15,7 @@ const NewsPage = () => {
 
     const news = response?.data || [];
 
+    // Handle error
     useEffect(() => {
         if (error) {
             const msg = cleanBackendMessage(error);
@@ -24,7 +25,7 @@ const NewsPage = () => {
         }
     }, [error]);  
 
-    // Filtrado local con useMemo
+    // Filter local with useMemo
     const filteredNews = useMemo(() => {
         if (!game) return news;
         return news.filter((item) => item.game === game);
@@ -32,6 +33,7 @@ const NewsPage = () => {
 
     return (
         <main className="container mx-auto px-4 pb-6">
+            {/* Banner */}
             <div className="relative w-screen max-w-none left-1/2 transform -translate-x-1/2 overflow-hidden">
                 <div
                     className="flex items-center justify-center h-[200px]"
@@ -51,6 +53,7 @@ const NewsPage = () => {
                     Últimas noticias
                 </h1>
 
+                {/* Select for filter news by game */}
                 <select
                     name="game"
                     className="bg-[var(--bg)] text-white border-2 border-white rounded-md p-2"
@@ -65,6 +68,7 @@ const NewsPage = () => {
                 </select>
             </div>
 
+            {/* Loading */}
             {loading ? (
                 <div className="flex justify-center items-center min-h-[60vh]">
                     <LoadingSpinner />
@@ -75,6 +79,7 @@ const NewsPage = () => {
                 </p>
             ) : (
                 <section className="flex flex-col gap-5">
+                    {/* News cards */}
                     {filteredNews.map((newsItem, index) => (
                         <NewsCard key={index} news={newsItem} />
                     ))}

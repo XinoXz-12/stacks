@@ -20,6 +20,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    // Handle submit
     const handleSubmit = useCallback(
         async (e) => {
             e.preventDefault();
@@ -53,6 +54,8 @@ const Login = () => {
             <h1 className="mb-8 text-3xl font-bold text-[var(--white)]">
                 Iniciar Sesión
             </h1>
+
+            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-[var(--white)]">
@@ -79,8 +82,10 @@ const Login = () => {
                     />
                 </div>
 
+                {/* Error message above button */}
                 {error && <p className="text-red-500">{error}</p>}
 
+                {/* Button */}
                 <button
                     type="submit"
                     className="btn w-full rounded bg-[var(--prim)] px-4 py-2 text-[var(--white)] hover:bg-[var(--prim-hover)] active:bg-[var(--bg)] active:border-[var(--prim)] active:border-1"

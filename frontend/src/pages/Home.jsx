@@ -6,14 +6,17 @@ const Home = () => {
         <main>
             <section className="container mx-auto flex flex-col md:flex-row gap-10 items-center py-20 px-4">
                 <div className="md:w-1/2 animate-fade-in">
+                    {/* Title */}
                     <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r pb-6 from-[var(--prim)] to-purple-600 bg-clip-text text-transparent text-center md:text-left">
                         Construye tu equipo ganador
                     </h1>
+                    {/* Description */}
                     <p className="text-xl mb-10 text-gray-600 dark:text-gray-300 text-center md:text-left">
                         Stacks te ayuda a encontrar compañeros de equipo,
                         programar partidas y competir en un ambiente positivo y
                         libre de toxicidad.
                     </p>
+                    {/* Buttons */}
                     <div className="flex gap-4">
                         <a
                             id="get-started"
@@ -32,6 +35,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="md:w-1/2 mt-10 md:mt-0 animate-float">
+                    {/* Image */}
                     <img
                         src="https://images.pexels.com/photos/7848992/pexels-photo-7848992.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         alt="Ilustración de Stacks"
@@ -49,6 +53,7 @@ const Home = () => {
                     <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[var(--prim)] to-purple-600 bg-clip-text text-transparent">
                         Características principales
                     </h2>
+                    {/* Features cards from object features in helpers/constantsData.js */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-4">
                         {features.map((feature, index) => (
                             <div
@@ -70,6 +75,7 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Contact section */}
             <section className="container mx-auto py-20 px-4 text-center">
                 <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-[var(--prim)] to-purple-600 bg-clip-text text-transparent">
                     ¿Listo para unirte?

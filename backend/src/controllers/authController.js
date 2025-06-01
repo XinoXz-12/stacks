@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { errorResponse } from "../helpers/functions.js";
 
-// Login
+// Login new user
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -49,7 +49,7 @@ const login = async (req, res) => {
     }
 };
 
-// Registro
+// Register new user
 const register = async (req, res) => {
     try {
         const { username, password, email, age, gender } = req.body;
@@ -80,7 +80,7 @@ const register = async (req, res) => {
         if (existingEmail)
             return errorResponse(res, "#AuthController# #register# Email en uso", 400);
 
-        // Crear imagen con jdenticon
+        // Create image with jdenticon
         const icon = jdenticon.toPng(username, 100);
         const filename = `jidenticon-${Date.now()}-${username}.png`;
         const uploadDir = path.join(process.cwd(), "uploads");
@@ -127,12 +127,12 @@ const register = async (req, res) => {
     }
 };
 
-// Logout (pasivo)
+// Logout user
 const logout = async (_req, res) => {
     res.json({ message: "¡Hasta luego!" });
 };
 
-// Verificar autenticación por token
+// Check authentication by token
 const checkAuth = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;

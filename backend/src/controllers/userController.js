@@ -1,7 +1,7 @@
 import { User } from "../models/index.js";
 import { errorResponse } from "../helpers/functions.js";
 
-// Obtener usuario actual
+// Get current user
 const getUser = async (req, res) => {
     try {
         if (!req.userId)
@@ -21,7 +21,7 @@ const getUser = async (req, res) => {
     }
 };
 
-// Obtener todos los usuarios
+// Get all users
 const getAllUsers = async (_req, res) => {
     try {
         const users = await User.find().select("-password");
@@ -40,7 +40,7 @@ const getAllUsers = async (_req, res) => {
     }
 };
 
-// Actualizar usuario
+// Update user
 const updateUser = async (req, res) => {
     try {
         if (!req.userId)
@@ -97,7 +97,7 @@ const updateUser = async (req, res) => {
     }
 };
 
-// Actualizar imagen del usuario
+// Update user image
 const updateUserImage = async (req, res) => {
     try {
         if (!req.userId)
@@ -138,7 +138,7 @@ const updateUserImage = async (req, res) => {
     }
 };
 
-// Eliminar usuario
+// Delete user
 const deleteUser = async (req, res) => {
     try {
         if (!req.userId)
@@ -163,7 +163,7 @@ const deleteUser = async (req, res) => {
     }
 };
 
-// Comparar contraseña
+// Compare password
 const comparePassword = async (req, res) => {
     try {
         const { password } = req.body;

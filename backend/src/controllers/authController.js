@@ -30,6 +30,13 @@ const login = async (req, res) => {
             expiresIn: "12h",
         });
 
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 12 * 60 * 60 * 1000,
+        });
+
         res.status(200).json({
             success: true,
             message: "¡Bienvenido!",
@@ -106,6 +113,13 @@ const register = async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: "12h",
+        });
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 12 * 60 * 60 * 1000,
         });
 
         res.status(201).json({

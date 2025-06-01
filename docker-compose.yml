@@ -96,7 +96,7 @@ services:
       - ./certbot-www:/var/www/certbot
     entrypoint: ["sh", "-c"]
     command: >
-      sleep 15 &&
+      sleep 15 && \
       if ! grep -q "Let's Encrypt" /etc/letsencrypt/live/stacks-gg.duckdns.org/fullchain.pem 2>/dev/null; then
         echo 'Ejecutando Certbot para obtener certificado real...';
         certbot certonly --webroot --webroot-path=/var/www/certbot \

@@ -23,12 +23,11 @@ app.set("io", io);
 io.on("connection", (socket) => handleSocketEvents(io, socket));
 
 server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en https://stacks-gg.duckdns.org/api/`);
     console.log("Variables de entorno:");
     console.log("PORT:", process.env.PORT);
     console.log(
         "MONGODB_URI:",
         process.env.MONGODB_URI ? "Configurada" : "No configurada"
     );
-    console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 });

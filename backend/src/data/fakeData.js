@@ -1,12 +1,12 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 async function fakeData() {
     const uri = process.env.MONGODB_URI || 'mongodb://root:example@mongo:27017/stacks?authSource=admin';
     const client = new MongoClient(uri);
 
-    // Function to generate fake ObjectIds and dates
-    const makeObjectId = (i) => `ObjectId("666f${String(i).padStart(6, '0')}")`;
-    const makeDate = () => `ISODate("${new Date().toISOString()}")`;
+    // Generate random ObjectId and Date
+    const makeObjectId = () => new ObjectId();
+    const makeDate = () => new Date();
 
     try {
         await client.connect();
@@ -22,7 +22,7 @@ async function fakeData() {
 
         // USERS
         const users = Array.from({ length: 10 }).map((_, i) => ({
-            _id: eval(makeObjectId(i)),
+            _id: makeObjectId(),
             username: `User${i}`,
             email: `user${i}@mail.com`,
             password: "123456",
@@ -33,9 +33,9 @@ async function fakeData() {
         }));
 
         // PROFILES
-        const profiles = Array.from({ length: 10 }).map((_, i) => ({
-            _id: eval(makeObjectId(i + 100)),
-            user_id: users[i]._id,
+        const profiles = users.map((user, i) => ({
+            _id: makeObjectId(),
+            user_id: user._id,
             game: ["Valorant", "Overwatch", "LoL"][i % 3],
             user_game: `GameUser${i}#TAG`,
             rank: ["Iron", "Bronze", "Silver", "Gold", "Radiant", "Top 500"][i % 6],
@@ -45,34 +45,34 @@ async function fakeData() {
         }));
 
         // TEAMS
-        const teams = Array.from({ length: 10 }).map((_, i) => ({
-            _id: eval(makeObjectId(i + 200)),
+        const teams = profiles.map((profile, i) => ({
+            _id: makeObjectId(),
             name: `Team${i}`,
-            game: profiles[i].game,
+            game: profile.game,
             gender: "Mixto",
             capacity: 5,
             members: [
-                profiles[i]._id,
+                profile._id,
                 profiles[(i + 1) % profiles.length]._id
             ]
         }));
 
         // REQUESTS
-        const requests = Array.from({ length: 10 }).map((_, i) => ({
-            _id: eval(makeObjectId(i + 300)),
+        const requests = profiles.map((profile, i) => ({
+            _id: makeObjectId(),
             team_id: teams[i % teams.length]._id,
             profile_id: profiles[(i + 2) % profiles.length]._id,
             status: "accepted",
-            date_joined: eval(makeDate())
+            date_joined: makeDate()
         }));
 
         // MESSAGES
-        const messages = Array.from({ length: 10 }).map((_, i) => ({
-            _id: eval(makeObjectId(i + 400)),
+        const messages = profiles.map((profile, i) => ({
+            _id: makeObjectId(),
             teamId: teams[i % teams.length]._id,
             senderId: profiles[(i + 1) % profiles.length]._id,
             content: `Mensaje de prueba ${i}`,
-            date: eval(makeDate())
+            date: makeDate()
         }));
 
         await db.collection('users').insertMany(users);
@@ -81,7 +81,7 @@ async function fakeData() {
         await db.collection('requests').insertMany(requests);
         await db.collection('messages').insertMany(messages);
 
-        console.log("Datos insertados.");
+        console.log("Datos insertados correctamente.");
     } catch (err) {
         console.error("Error en el script de fakeData:", err);
     } finally {

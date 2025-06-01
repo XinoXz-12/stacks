@@ -13,10 +13,10 @@ import authMiddleware from "../middleware/authMiddleware.js";
 export default function registerRoutes(app) {
     app.use("/api/auth", authRoutes);
     app.use("/api/users", authMiddleware, userRoutes);
-    app.use("/api/profiles", authMiddleware, profileRoutes);
-    app.use("/api/teams", authMiddleware, teamRoutes);
+    app.use("/api/profiles", profileRoutes);
+    app.use("/api/teams", teamRoutes);
     app.use("/api/requests", authMiddleware, requestRoutes);
-    app.use("/api/members", authMiddleware, membersRoutes);
+    app.use("/api/members", membersRoutes);
     app.use("/api/chat", authMiddleware, chatRoutes);
     app.use("/api/news", newsRoutes);
     app.use("/api/upload", uploadRoutes);

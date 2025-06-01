@@ -22,16 +22,18 @@ async function fakeData() {
         console.log("Insertando datos de prueba...");
 
         // USERS
-        const users = Array.from({ length: 10 }).map(async (_, i) => ({
-            _id: makeObjectId(),
-            username: `User${i}`,
-            email: `user${i}@mail.com`,
-            password: await bcrypt.hash("123456", 8),
-            age: 18 + i,
-            gender: i % 2 === 0 ? "M" : "F",
-            image: `/uploads/avatar${i}.png`,
-            role: "user"
-        }));
+        const users = await Promise.all(
+            Array.from({ length: 10 }).map(async (_, i) => ({
+                _id: makeObjectId(),
+                username: `User${i}`,
+                email: `user${i}@mail.com`,
+                password: await bcrypt.hash("123456", 8),
+                age: 18 + i,
+                gender: i % 2 === 0 ? "M" : "F",
+                image: `/uploads/avatar${i}.png`,
+                role: "user",
+            }))
+        );
 
         // PROFILES
         const profiles = users.map((user, i) => ({

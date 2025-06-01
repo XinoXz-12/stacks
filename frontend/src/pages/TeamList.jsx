@@ -12,6 +12,10 @@ import useFetch from "../hooks/useFetch";
 const TeamList = () => {
     const { user } = useAuth();
     const { addToast } = useToast();
+    const [shownErrors, setShownErrors] = useState({
+        teams: false,
+        ranks: false,
+    });
     const [filters, setFilters] = useState({
         game: "Valorant",
         gender: "",
@@ -70,9 +74,15 @@ const TeamList = () => {
 
     // Error
     useEffect(() => {
-        if (errorTeams) addToast(cleanBackendMessage(errorTeams), "error");
-        if (errorRanks) addToast(cleanBackendMessage(errorRanks), "error");
-    }, [errorTeams, errorRanks, addToast]);
+        if (errorTeams && !shownErrors.teams) {
+            addToast(cleanBackendMessage(errorTeams), "error");
+            setShownErrors((prev) => ({ ...prev, teams: true }));
+        }
+        if (errorRanks && !shownErrors.ranks) {
+            addToast(cleanBackendMessage(errorRanks), "error");
+            setShownErrors((prev) => ({ ...prev, ranks: true }));
+        }
+    }, [errorTeams, errorRanks, addToast, shownErrors]);
 
     // Handle team created
     const handleTeamCreated = () => {
